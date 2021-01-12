@@ -1,0 +1,7 @@
+k*.py
+obj*/
+ssd_*/
+obj*.zip
+ssd_*.tar.gz
+ssd_*.zip
+whole_*.tar
