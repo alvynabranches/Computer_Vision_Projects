@@ -1,7 +1,16 @@
+# Custom
+
+# Files
 k*.py
+*.ipynb
+
+# Folders
+.ipynb_checkpoints/
 obj*/
 ssd_*/
-obj*.zip
-ssd_*.tar.gz
-ssd_*.zip
-whole_*.tar
+data/
+
+# Archives
+*.zip
+*.tar.gz
+*.tar
