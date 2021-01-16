@@ -69,6 +69,7 @@ def get_data(img_pths:list, df, json_file_path='./data/data.json'):
     return X, y
 
 def generate_data(itrs, start=0):
+    t = pd.DataFrame(columns=['itr', 'time'])
     btcs = int(100_000 / itrs)
     df, imgs = get_paths(train_data_path)
     for i in range(start, itrs):
@@ -77,9 +78,17 @@ def generate_data(itrs, start=0):
         del _
         e = time.perf_counter()
         print()
+        t = t.append(dict(itr=i+1, time=round(e-s, 2)))
         print(f'Time Taken: {(e-s):.2f} seconds')
+    t.to_excel('./data/time.xlsx')
 
+st = time.perf_counter()
 generate_data(100)
+et = time.perf_counter()
+
+with open('./data/time.txt', 'w') as f:
+    f.write(str(et-st))
+    f.close()
 
 if SHUTDOWN:
-    os.system('shutdown /s /t 15')
+    os.system('shutdown /s /t 10')
