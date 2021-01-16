@@ -79,9 +79,7 @@ def generate_data(itrs, start=0):
         print()
         print(f'Time Taken: {(e-s):.2f} seconds')
 
+generate_data(100)
 
-
-generate_data()
-
-
-os.system('shutdown /s /t 15')
+if SHUTDOWN:
+    os.system('shutdown /s /t 15')
