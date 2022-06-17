@@ -2,7 +2,6 @@ import os
 import json
 import time
 import threaded
-import threading
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -24,7 +23,7 @@ from matplotlib.image import imread
 base = os.path.dirname(os.path.abspath(__file__))
 data_path = os.path.join(base, 'data/tiny-imagenet-200/')
 train_data_path, test_data_path, val_data_path = data_path + 'train/', data_path + 'test/', data_path + 'val/'
-SHUTDOWN = True
+SHUTDOWN = False
 
 def get_paths(path, csv_file_path='./data/data.csv'):
     if os.path.isfile(csv_file_path):
@@ -68,7 +67,7 @@ def get_data(img_pths:list, df, json_file_path='./data/data.json'):
     save(X, y, json_file_path).start()
     return X, y
 
-def generate_data(itrs, start=0):
+def generate_data(itrs, start=99):
     t = pd.DataFrame(columns=['itr', 'time'])
     btcs = int(100_000 / itrs)
     df, imgs = get_paths(train_data_path)
@@ -78,7 +77,7 @@ def generate_data(itrs, start=0):
         del _
         e = time.perf_counter()
         print()
-        t = t.append(dict(itr=i+1, time=round(e-s, 2)))
+        t = t.append(dict(itr=i+1, time=round(e-s, 2)), ignore_index=True)
         print(f'Time Taken: {(e-s):.2f} seconds')
     t.to_excel('./data/time.xlsx')
 
@@ -91,4 +90,5 @@ with open('./data/time.txt', 'w') as f:
     f.close()
 
 if SHUTDOWN:
+    time.sleep(300)
     os.system('shutdown /s /t 10')
